@@ -1,0 +1,14 @@
+#!/bin/bash
+echo "=> Building the binary"
+
+folder="gitlab-runner"
+if ! git clone "${url}" "${folder}" 2>/dev/null && [ -d "${folder}" ] ; then
+    echo "Clone failed because the folder ${folder} exists"
+fi
+
+git clone git@gitlab.com:gitlab-org/gitlab-runner.git 
+tags=$(git --git-dir=$folder/.git tag -l --sort=version:refname | tail)
+
+for tag in $tags; do
+    echo "Tag to process: $tag"
+done
